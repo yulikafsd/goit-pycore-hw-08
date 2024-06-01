@@ -1,9 +1,9 @@
-from address_book import AddressBook
+from pickle_mod import load_data, save_data
 from commands import *
 
 
 def main():
-    contacts = AddressBook()
+    contacts = load_data()
 
     print("Welcome to the assistant bot!")
     
@@ -13,6 +13,7 @@ def main():
 
         match command:
             case "close" | "exit":
+                save_data(contacts)
                 print("Good bye!")
                 break
             case "hello":
