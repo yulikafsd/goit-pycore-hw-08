@@ -1,5 +1,5 @@
+from modules.record import Record
 from collections import UserDict
-from record import Record
 from datetime import datetime, timedelta
 
 
@@ -11,44 +11,44 @@ class AddressBook(UserDict):
 
     def find(self, name):
         record = self.data.get(name)
-        return record if record is not None else None
+        return record if record else None
 
     def delete(self, name):
-        record = self.find(name)
-        if record:
-            del self.data[name]
-            return f"{name} deleted from contacts"
-        else:
+        record = self.data.get(name)
+        if not record:
             return f"No contact {name} was found"
+        del self.data[name]
+        return f"{name} deleted from contacts"
 
     def get_upcoming_birthdays(self) -> list:
-        today = datetime.today().date()
+        current_date = datetime.today().date()
+
         upcoming_birthdays = []
 
         for record in self.data.values():
-            if record.birthday and record.birthday.value:
-                birthday = record.birthday.value.date()
-                year = (
-                    today.year
-                    if birthday.replace(year=today.year) >= today
-                    else today.year + 1
+            if record.birthday:
+                contact_bd = record.birthday.value.date()
+                current_year = current_date.year
+                is_coming = contact_bd.replace(year=current_year) >= current_date
+                congratulation_year = (
+                    current_year if is_coming else current_date.year + 1
                 )
-                congratulation_date = birthday.replace(year=year)
+                congratulation_date = contact_bd.replace(year=congratulation_year)
+                is_next_week = 0 < (congratulation_date - current_date).days <= 7
 
-                if 0 <= (congratulation_date - today).days <= 7:
-                    # Якщо день народження випадає на вихідні — переносимо на понеділок
-                    if congratulation_date.weekday() == 5:
+                if is_next_week:
+
+                    bd_weekday = congratulation_date.weekday()
+                    if bd_weekday == 5:
                         congratulation_date += timedelta(days=2)
-                    elif congratulation_date.weekday() == 6:
+                    if bd_weekday == 6:
                         congratulation_date += timedelta(days=1)
 
-                    upcoming_birthdays.append(
-                        {
-                            "name": record.name.value,
-                            "congratulation_date": congratulation_date.strftime(
-                                "%d.%m.%Y"
-                            ),
-                        }
-                    )
+                    congrat_date_string = congratulation_date.strftime("%d.%m.%Y")
+                    coming_bd = {
+                        "name": record.name.value,
+                        "congratulation_date": congrat_date_string,
+                    }
+                    upcoming_birthdays.append(coming_bd)
 
         return upcoming_birthdays
