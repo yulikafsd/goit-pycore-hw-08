@@ -1,6 +1,20 @@
 from modules.pickle_data import load_data, save_data
 from modules.input_parser import parse_input
 from modules.commands import *
+from enum import Enum
+
+
+class Command(Enum):
+    ADD = "add [name] [phone]"
+    CHANGE = "change [name] [old_phone] [new_phone]"
+    PHONE = "phone [name]"
+    ALL = "all"
+    ADD_BIRTHDAY = "add-birthday [name] [birthday]"
+    SHOW_BIRTHDAY = "show-birthday [name]"
+    BIRTHDAYS = "birthdays"
+    HELLO = "hello"
+    CLOSE = "close"
+    EXIT = "exit"
 
 
 def main():
@@ -46,20 +60,9 @@ def main():
                 print(birthdays(book))
 
             case _:
-                print(
-                    """Invalid command\n
-                    The following commands are available:\n
-                    add [name] [phone]\n
-                    change [name] [old_phone] [new_phone]\n
-                    phone [name]\n
-                    all\n
-                    add-birthday [name] [birthday]\n
-                    show-birthday [name]\n
-                    birthdays\n
-                    hello\n
-                    close\n
-                    exit\n"""
-                )
+                print("Invalid command. The following commands are available:")
+                for cmd in Command:
+                    print(f" - {cmd.value}")
 
 
 if __name__ == "__main__":
