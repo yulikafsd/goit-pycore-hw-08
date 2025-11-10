@@ -1,5 +1,5 @@
-from modules.fields import Name, Phone, Birthday
-from modules.errors import ValidationError
+from .fields import Name, Phone, Birthday
+from .errors import ValidationError
 
 
 class Record:

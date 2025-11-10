@@ -1,10 +1,19 @@
-from modules.pickle_data import load_data, save_data
-from modules.input_parser import parse_input
-from modules.commands import *
 from enum import Enum
+from modules import (
+    load_data,
+    save_data,
+    parse_input,
+    add_contact,
+    change_contact,
+    show_phone,
+    show_all,
+    add_birthday,
+    show_birthday,
+    birthdays,
+)
 
 
-class Command(Enum):
+class Command_Use(Enum):
     ADD = "add [name] [phone]"
     CHANGE = "change [name] [old_phone] [new_phone]"
     PHONE = "phone [name]"
@@ -61,7 +70,7 @@ def main():
 
             case _:
                 print("Invalid command. The following commands are available:")
-                for cmd in Command:
+                for cmd in Command_Use:
                     print(f" - {cmd.value}")
 
 

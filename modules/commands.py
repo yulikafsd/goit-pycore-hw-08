@@ -1,6 +1,6 @@
-from modules.input_error import input_error
-from modules.addressbook import AddressBook
-from modules.record import Record
+from .utils import input_error
+from .addressbook import AddressBook
+from .record import Record
 
 
 @input_error

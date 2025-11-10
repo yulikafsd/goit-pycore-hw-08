@@ -1,4 +1,4 @@
-from modules.errors import ValidationError
+from .errors import ValidationError
 from datetime import datetime
 import re
 

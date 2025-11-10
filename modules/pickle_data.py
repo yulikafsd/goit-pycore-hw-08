@@ -1,4 +1,4 @@
-from modules.addressbook import AddressBook
+from .addressbook import AddressBook
 import pickle
 
 

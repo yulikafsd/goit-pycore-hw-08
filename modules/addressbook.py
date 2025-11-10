@@ -1,4 +1,4 @@
-from modules.record import Record
+from .record import Record
 from collections import UserDict
 from datetime import datetime, timedelta
 
